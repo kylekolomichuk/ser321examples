@@ -194,6 +194,7 @@ class WebServer {
             builder.append("File not found: " + file);
           }
         } else if (request.contains("multiply?")) {
+            try {
           // This multiplies two numbers, there is NO error handling, so when
           // wrong data is given this just crashes
 
@@ -216,6 +217,14 @@ class WebServer {
 
           // TODO: Include error handling here with a correct error code and
           // a response that makes sense
+            }
+            catch (IOException e) {
+                builder.append("HTTP/1.1 400 Bad Request\n");
+                builder.append("Content-Type: text/html; charset=utf-8\n");
+                builder.append("\n");
+                builder.append("Invalid syntax for Multiply request. Provide 2 ints as num1 and num2.");
+
+            }
 
         } else if (request.contains("github?")) {
           // pulls the query from the request and runs it with GitHub's REST API
