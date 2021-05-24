@@ -238,8 +238,8 @@ class WebServer {
           // JSON which will for now only be printed in the console. See the todo below
 
           Map<String, String> query_pairs = new LinkedHashMap<String, String>();
+          System.out.println(request);
           query_pairs = splitQuery(request.replace("github?", ""));
-          System.out.println(query_pairs);
           String json = fetchURL("https://api.github.com/" + query_pairs.get("query"));
 
           builder.append("Check the todos mentioned in the Java source file");
