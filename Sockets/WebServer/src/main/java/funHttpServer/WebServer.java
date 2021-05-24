@@ -223,7 +223,6 @@ class WebServer {
                 builder.append("Content-Type: text/html; charset=utf-8\n");
                 builder.append("\n");
                 builder.append("Invalid syntax for Multiply request. Provide 2 ints as num1 and num2.");
-
             }
 
         } else if (request.contains("github?")) {
