@@ -241,14 +241,12 @@ class WebServer {
           query_pairs = splitQuery(request.replace("github?", ""));
           String json = fetchURL("https://api.github.com/" + query_pairs.get("query"));
           String temp = request.replace("/repos", "");
-          String user = request.replace("query=users/", "");
+          String user = temp.replace("query=users/", "");
           int startIDIndex = json.indexOf("\",\"id\":");
           int endIDIndex = json.indexOf(",", startIDIndex);
           String id = json.substring(startIDIndex, endIDIndex);
-          System.out.println(json);
-          System.out.println(user);
           System.out.println(id);
-          /*
+          String name;
           do {
             System.out.println(json.indexOf("\"id\":"));
             int startNameIndex = json.indexOf("\"name\":");
@@ -262,8 +260,6 @@ class WebServer {
             System.out.println(name);
             builder.append(user + ", " + id + " -> " + name);
           } while (json.indexOf("\"id\":") > 0);
-          */
-
           builder.append("HTTP/1.1 200 OK\n");
           builder.append("Content-Type: text/html; charset=utf-8\n");
           builder.append("\n");
