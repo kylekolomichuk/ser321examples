@@ -254,6 +254,9 @@ class WebServer {
             int endIDIndex = json.indexOf(",", startIDIndex);
             id = json.substring(startIDIndex, endIDIndex);
             json = json.substring(endIDIndex);
+            System.out.println(user);
+            System.out.println(id);
+            System.out.println(name);
             builder.append(user + ", " + id + " -> " + name);
           } while (json.indexOf("\"id\":") > 0);
           builder.append("HTTP/1.1 200 OK\n");
