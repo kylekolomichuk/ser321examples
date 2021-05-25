@@ -242,20 +242,17 @@ class WebServer {
           String json = fetchURL("https://api.github.com/" + query_pairs.get("query"));
           String temp = request.replace("/repos", "");
           String user = request.replace("query=users/", "");
-          String id;
+          int startIDIndex = json.indexOf("\",\"id\":");
+          int endIDIndex = json.indexOf(",", startIDIndex);
+          String id = json.substring(startIDIndex, endIDIndex);
           String name;
           do {
             int startNameIndex = json.indexOf("\"name\":");
             System.out.println(startNameIndex);
             int endNameIndex = json.indexOf(",", startNameIndex);
             name = json.substring(startNameIndex, endNameIndex);
-            json = json.substring(endNameIndex);
-            if (id.equals("")) {
-                int startIDIndex = json.indexOf("\"id\":");
-                int endIDIndex = json.indexOf(",", startIDIndex);
-                id = json.substring(startIDIndex, endIDIndex);
-                json = json.substring(endIDIndex);
-            }
+            int endRepoIndex = json.indexOf("default_branch", endNameIndex)
+            json = json.substring(endRepoIndex);
             System.out.println(user);
             System.out.println(id);
             System.out.println(name);
