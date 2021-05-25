@@ -240,6 +240,7 @@ class WebServer {
           Map<String, String> query_pairs = new LinkedHashMap<String, String>();
           query_pairs = splitQuery(request.replace("github?", ""));
           String json = fetchURL("https://api.github.com/" + query_pairs.get("query"));
+          System.out.println(json);
           String temp = request.replace("/repos", "");
           String user = request.replace("query=users/", "");
           String id;
