@@ -247,17 +247,17 @@ class WebServer {
           int startIDIndex = json.indexOf("\"id\":");
           int endIDIndex = json.indexOf(",", startIDIndex);
           String id = json.substring(startIDIndex, endIDIndex);
-          System.out.println("id: " + id);
+          id = id.replace("\"id\":", "");
           String name;
           do {
             int startNameIndex = json.indexOf("\"name\":");
             int endNameIndex = json.indexOf(",", startNameIndex);
             name = json.substring(startNameIndex, endNameIndex);
+            name = name.replace("\"name\":", "");
             int endRepoIndex = json.indexOf("default_branch", endNameIndex);
             json = json.substring(endRepoIndex);
-            System.out.println("Repo name: " + name);
-            builder.append(user + ", " + id + " -> " + name);
-          } while (json.indexOf("\",\"id\":") >= 0);
+            builder.append(user + ", " + id + " -> " + name + "\n");
+          } while (json.indexOf("\",\"id\":") != -1);
           builder.append("HTTP/1.1 200 OK\n");
           builder.append("Content-Type: text/html; charset=utf-8\n");
           builder.append("\n");
