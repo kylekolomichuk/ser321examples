@@ -238,11 +238,28 @@ class WebServer {
           // JSON which will for now only be printed in the console. See the todo below
 
           Map<String, String> query_pairs = new LinkedHashMap<String, String>();
-          System.out.println(request);
           query_pairs = splitQuery(request.replace("github?", ""));
           String json = fetchURL("https://api.github.com/" + query_pairs.get("query"));
+          String temp = request.replace("/repos", "");
+          String user = request.replace("query=users/", "");
+          String id;
+          String name;
+          do {
+            int startNameIndex = json.indexOf("\"name\": ");
+            int endNameIndex = json.indexOf(",", startNameIndex);
+            name = json.substring(startNameIndex, endNameIndex);
+            json = json.substring(endNameIndex);
+            int startIDIndex = json.indexOf("\"id\": ");
+            int endIDIndex = json.indexOf(",", startIDIndex);
+            id = json.substring(startIDIndex, endIDIndex);
+            json = json.substring(endIDIndex);
+            builder.append(user + ", " + id + " -> " + name);
+          } while (json.indexOf("\"id\": ") != 0);
+          builder.append("HTTP/1.1 200 OK\n");
+          builder.append("Content-Type: text/html; charset=utf-8\n");
+          builder.append("\n");
+          
 
-          builder.append("Check the todos mentioned in the Java source file");
           // TODO: Parse the JSON returned by your fetch and create an appropriate
           // response
           // and list the owner name, owner id and name of the public repo on your webpage, e.g.
