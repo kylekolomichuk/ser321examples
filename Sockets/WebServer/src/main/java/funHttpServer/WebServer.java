@@ -242,8 +242,9 @@ class WebServer {
           String json = fetchURL("https://api.github.com/" + query_pairs.get("query"));
           String temp = request.replace("/repos", "");
           String user = temp.replace("github?query=users/", "");
-          int startIDIndex = json.indexOf("\",\"id\":");
-          System.out.println("Start ID index: " + startIDIndex);
+          int loginIndex = json.indexOf("\"login\":");
+          json = json.substring(loginIndex);
+          int startIDIndex = json.indexOf("\"id\":");
           int endIDIndex = json.indexOf(",", startIDIndex);
           String id = json.substring(startIDIndex, endIDIndex);
           System.out.println("id: " + id);
