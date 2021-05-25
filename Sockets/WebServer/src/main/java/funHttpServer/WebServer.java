@@ -214,16 +214,17 @@ class WebServer {
             builder.append("Content-Type: text/html; charset=utf-8\n");
             builder.append("\n");
             builder.append("Result is: " + result);
-            throw new IllegalArgumentException("Bad syntax for multiply");
           // TODO: Include error handling here with a correct error code and
           // a response that makes sense
             }
             catch (Exception e) {
+                
                 builder.append("HTTP/1.1 400 Bad Request\n");
                 builder.append("Content-Type: text/html; charset=utf-8\n");
                 builder.append("\n");
                 builder.append("Invalid syntax for Multiply request. Provide 2 ints as num1 and num2.");
                 e.printStackTrace();
+                throw new IllegalArgumentException("Bad syntax for multiply");
             }
 
         } else if (request.contains("github?")) {
@@ -250,23 +251,14 @@ class WebServer {
                 json = json.substring(endRepoIndex);
                 builder.append(user + ", " + id + " -> " + name + "\n");
             } while (json.indexOf("\",\"id\":") != -1);
-            throw new IllegalArgumentException("Bad syntax for github request!");
             }
           catch (Exception e) {
             builder.append("HTTP/1.1 400 Bad Request\n");
-            builder.append("Content-Type: text/html; charset=utf-8\n");
             builder.append("\n");
             builder.append("Invalid syntax for github request!");
             e.printStackTrace();
+            throw new IllegalArgumentException("Bad syntax for github request!");
         }
-          
-
-          // TODO: Parse the JSON returned by your fetch and create an appropriate
-          // response
-          // and list the owner name, owner id and name of the public repo on your webpage, e.g.
-          // amehlhase, 46384989 -> memoranda
-          // amehlhase, 46384989 -> ser316examples
-          // amehlhase, 46384989 -> test316
 
         } else {
           // if the request is not recognized at all
