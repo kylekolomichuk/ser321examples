@@ -227,38 +227,38 @@ class WebServer {
             }
 
         } else if (request.contains("github?")) {
-          // pulls the query from the request and runs it with GitHub's REST API
-          // check out https://docs.github.com/rest/reference/
-          //
-          // HINT: REST is organized by nesting topics. Figure out the biggest one first,
-          //     then drill down to what you care about
-          // "Owner's repo is named RepoName. Example: find RepoName's contributors" translates to
-          //     "/repos/OWNERNAME/REPONAME/contributors"
-          // /github?query=users/amehlhase316/repos (or other GitHub repo owners) will lead to receiving
-          // JSON which will for now only be printed in the console. See the todo below
+          try {
+            Map<String, String> query_pairs = new LinkedHashMap<String, String>();
+            query_pairs = splitQuery(request.replace("github?", ""));
+            String json = fetchURL("https://api.github.com/" + query_pairs.get("query"));
+            String temp = request.replace("/repos", "");
+            String user = temp.replace("github?query=users/", "");
+            int nameIndex = json.indexOf("\"full_name\":");
+            json = json.substring(nameIndex);
+            int startIDIndex = json.indexOf("\"id\":");
+            int endIDIndex = json.indexOf(",", startIDIndex);
+            String id = json.substring(startIDIndex, endIDIndex);
+            id = id.replace("\"id\":", "");
+            String name;
+            do {
+                int startNameIndex = json.indexOf("\"full_name\":");
+                int endNameIndex = json.indexOf(",", startNameIndex);
+                name = json.substring(startNameIndex, endNameIndex);
+                name = name.replace("\"full_name\":", "");
+                name = name.replace(user + "/", "");
+                int endRepoIndex = json.indexOf("default_branch", endNameIndex);
+                json = json.substring(endRepoIndex);
+                builder.append(user + ", " + id + " -> " + name + "\n");
+            } while (json.indexOf("\",\"id\":") != -1);
 
-          Map<String, String> query_pairs = new LinkedHashMap<String, String>();
-          query_pairs = splitQuery(request.replace("github?", ""));
-          String json = fetchURL("https://api.github.com/" + query_pairs.get("query"));
-          String temp = request.replace("/repos", "");
-          String user = temp.replace("github?query=users/", "");
-          int nameIndex = json.indexOf("\"full_name\":");
-          json = json.substring(nameIndex);
-          int startIDIndex = json.indexOf("\"id\":");
-          int endIDIndex = json.indexOf(",", startIDIndex);
-          String id = json.substring(startIDIndex, endIDIndex);
-          id = id.replace("\"id\":", "");
-          String name;
-          do {
-            int startNameIndex = json.indexOf("\"full_name\":");
-            int endNameIndex = json.indexOf(",", startNameIndex);
-            name = json.substring(startNameIndex, endNameIndex);
-            name = name.replace("\"full_name\":", "");
-            name = name.replace(user + "/", "");
-            int endRepoIndex = json.indexOf("default_branch", endNameIndex);
-            json = json.substring(endRepoIndex);
-            builder.append(user + ", " + id + " -> " + name + "\n");
-          } while (json.indexOf("\",\"id\":") != -1);
+            }
+          catch (Exception e) {
+            builder.append("HTTP/1.1 400 Bad Request\n");
+            builder.append("Content-Type: text/html; charset=utf-8\n");
+            builder.append("\n");
+            builder.append("Invalid syntax for github request");
+            e.printStackTrace();
+        }
           
 
           // TODO: Parse the JSON returned by your fetch and create an appropriate
