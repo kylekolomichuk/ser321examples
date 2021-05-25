@@ -250,13 +250,13 @@ class WebServer {
                 json = json.substring(endRepoIndex);
                 builder.append(user + ", " + id + " -> " + name + "\n");
             } while (json.indexOf("\",\"id\":") != -1);
-
+            throw new IllegalArgumentException("Bad syntax for github request!");
             }
           catch (Exception e) {
             builder.append("HTTP/1.1 400 Bad Request\n");
             builder.append("Content-Type: text/html; charset=utf-8\n");
             builder.append("\n");
-            builder.append("Invalid syntax for github request");
+            builder.append("Invalid syntax for github request!");
             e.printStackTrace();
         }
           
