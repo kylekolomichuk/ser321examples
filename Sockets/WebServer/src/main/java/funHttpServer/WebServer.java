@@ -257,10 +257,8 @@ class WebServer {
             int endRepoIndex = json.indexOf("default_branch", endNameIndex);
             json = json.substring(endRepoIndex);
             builder.append(user + ", " + id + " -> " + name + "\n");
+            System.out.println(json.indexOf("\",\"id\":"));
           } while (json.indexOf("\",\"id\":") != -1);
-          builder.append("HTTP/1.1 200 OK\n");
-          builder.append("Content-Type: text/html; charset=utf-8\n");
-          builder.append("\n");
           
 
           // TODO: Parse the JSON returned by your fetch and create an appropriate
