@@ -250,7 +250,7 @@ class WebServer {
             int endNameIndex = json.indexOf(",", startNameIndex);
             name = json.substring(startNameIndex, endNameIndex);
             json = json.substring(endNameIndex);
-            int startIDIndex = json.indexOf("\"id\": ");
+            int startIDIndex = json.indexOf("\"id\":");
             int endIDIndex = json.indexOf(",", startIDIndex);
             id = json.substring(startIDIndex, endIDIndex);
             json = json.substring(endIDIndex);
