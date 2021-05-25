@@ -243,20 +243,20 @@ class WebServer {
           String temp = request.replace("/repos", "");
           String user = temp.replace("github?query=users/", "");
           int startIDIndex = json.indexOf("\",\"id\":");
+          System.out.println("Start ID index: " + startIDIndex);
           int endIDIndex = json.indexOf(",", startIDIndex);
           String id = json.substring(startIDIndex, endIDIndex);
-          System.out.println(id);
+          System.out.println("id: " + id);
           String name;
           do {
-            System.out.println(json.indexOf("\"id\":"));
             int startNameIndex = json.indexOf("\"name\":");
-            System.out.println(startNameIndex);
             int endNameIndex = json.indexOf(",", startNameIndex);
             name = json.substring(startNameIndex, endNameIndex);
             int endRepoIndex = json.indexOf("default_branch", endNameIndex);
             json = json.substring(endRepoIndex);
-            System.out.println(user);
-            System.out.println(name);
+            System.out.println("Repo name: " + name);
+            System.out.print("Printing json");
+            System.out.println(json);
             builder.append(user + ", " + id + " -> " + name);
           } while (json.indexOf("\",\"id\":") >= 0);
           builder.append("HTTP/1.1 200 OK\n");
