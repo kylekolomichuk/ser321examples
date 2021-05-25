@@ -245,7 +245,7 @@ class WebServer {
           String id;
           String name;
           do {
-            int startNameIndex = json.indexOf("\"name\": ");
+            int startNameIndex = json.indexOf("\"name\":");
             System.out.println(startNameIndex);
             int endNameIndex = json.indexOf(",", startNameIndex);
             name = json.substring(startNameIndex, endNameIndex);
