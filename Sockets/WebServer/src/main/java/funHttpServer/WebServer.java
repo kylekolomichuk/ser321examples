@@ -255,7 +255,7 @@ class WebServer {
             id = json.substring(startIDIndex, endIDIndex);
             json = json.substring(endIDIndex);
             builder.append(user + ", " + id + " -> " + name);
-          } while (json.indexOf("\"id\": ") != 0);
+          } while (json.indexOf("\"id\":") != 0);
           builder.append("HTTP/1.1 200 OK\n");
           builder.append("Content-Type: text/html; charset=utf-8\n");
           builder.append("\n");
