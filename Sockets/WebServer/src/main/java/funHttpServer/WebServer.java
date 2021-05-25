@@ -256,8 +256,6 @@ class WebServer {
             int endRepoIndex = json.indexOf("default_branch", endNameIndex);
             json = json.substring(endRepoIndex);
             System.out.println("Repo name: " + name);
-            System.out.print("Printing json");
-            System.out.println(json);
             builder.append(user + ", " + id + " -> " + name);
           } while (json.indexOf("\",\"id\":") >= 0);
           builder.append("HTTP/1.1 200 OK\n");
