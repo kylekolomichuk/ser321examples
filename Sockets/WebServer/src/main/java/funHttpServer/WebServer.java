@@ -245,8 +245,12 @@ class WebServer {
           int startIDIndex = json.indexOf("\",\"id\":");
           int endIDIndex = json.indexOf(",", startIDIndex);
           String id = json.substring(startIDIndex, endIDIndex);
-          String name;
+          System.out.println(json);
+          System.out.println(user);
+          System.out.println(id);
+          /*
           do {
+            System.out.println(json.indexOf("\"id\":"));
             int startNameIndex = json.indexOf("\"name\":");
             System.out.println(startNameIndex);
             int endNameIndex = json.indexOf(",", startNameIndex);
@@ -258,6 +262,8 @@ class WebServer {
             System.out.println(name);
             builder.append(user + ", " + id + " -> " + name);
           } while (json.indexOf("\"id\":") > 0);
+          */
+
           builder.append("HTTP/1.1 200 OK\n");
           builder.append("Content-Type: text/html; charset=utf-8\n");
           builder.append("\n");
