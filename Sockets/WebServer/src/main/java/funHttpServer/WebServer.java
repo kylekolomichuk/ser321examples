@@ -250,10 +250,11 @@ class WebServer {
           id = id.replace("\"id\":", "");
           String name;
           do {
-            int startNameIndex = json.indexOf("\"name\":");
+            int startNameIndex = json.indexOf("\"full_name\":");
             int endNameIndex = json.indexOf(",", startNameIndex);
             name = json.substring(startNameIndex, endNameIndex);
-            name = name.replace("\"name\":", "");
+            name = name.replace("\"full_name\":", "");
+            name = name.replace(user + "/", "");
             int endRepoIndex = json.indexOf("default_branch", endNameIndex);
             json = json.substring(endRepoIndex);
             builder.append(user + ", " + id + " -> " + name + "\n");
