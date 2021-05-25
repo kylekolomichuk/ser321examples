@@ -251,7 +251,7 @@ class WebServer {
             System.out.println(startNameIndex);
             int endNameIndex = json.indexOf(",", startNameIndex);
             name = json.substring(startNameIndex, endNameIndex);
-            int endRepoIndex = json.indexOf("default_branch", endNameIndex)
+            int endRepoIndex = json.indexOf("default_branch", endNameIndex);
             json = json.substring(endRepoIndex);
             System.out.println(user);
             System.out.println(id);
