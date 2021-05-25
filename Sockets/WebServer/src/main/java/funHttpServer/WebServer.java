@@ -240,13 +240,13 @@ class WebServer {
           Map<String, String> query_pairs = new LinkedHashMap<String, String>();
           query_pairs = splitQuery(request.replace("github?", ""));
           String json = fetchURL("https://api.github.com/" + query_pairs.get("query"));
-          System.out.println(json);
           String temp = request.replace("/repos", "");
-          String user = request.replace("query=users/", "");
+          String user = temp.replace("query=users/", "");
           String id;
           String name;
           do {
             int startNameIndex = json.indexOf("\"name\": ");
+            System.out.println(startNameIndex);
             int endNameIndex = json.indexOf(",", startNameIndex);
             name = json.substring(startNameIndex, endNameIndex);
             json = json.substring(endNameIndex);
